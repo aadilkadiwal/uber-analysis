@@ -121,3 +121,25 @@ To deeply understand Uber trip data from a particular website. We'll use Google 
 <p align="center">
 <img src="images/dashboard.png" style="width: 400px"/>
 </p>
+
+---
+
+### Benefits
+
+**Data Analysis Skills:** Engaging in this project will enhance your data analysis skills as you work with real-world data and implement various data processing techniques.
+
+**Cloud Technology Proficiency:** By utilizing Google Cloud services like Cloud Storage, Virtual Machines, and SQL Database, you'll gain practical experience with cloud infrastructure, which is valuable in today's tech landscape.
+
+**ETL Workflow:** Setting up an ETL (Extract, Transform, Load) workflow using Mage application will teach you how to efficiently process and prepare data for analysis.
+
+**Database Management:** Creating and managing a SQL database using Google Cloud SQL will give you hands-on experience in database administration and data storage.
+
+**Data Visualization:** Designing interactive dashboards using LookerStudio will enable you to present your insights effectively, improving your data visualization skills.
+
+---
+
+### Reference
+
+**Related Video:**
+
+[Uber Data Analytics | End-To-End Data Engineering Project](https://www.youtube.com/watch?v=WpQECq5Hx9g)
