@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-# To read uber_data.csv file and convert into DataFrame
+# To read uber_data.parquet file and convert into DataFrame
 uber_data = pd.read_parquet("uber_data.parquet")
 
 # To read location_zone.csv file and convert into DataFrame
@@ -10,6 +10,10 @@ location_data = pd.read_csv("location_zone.csv")
 # Creating location table
 location_data["LocationID"] = location_data[["LocationID"]].drop_duplicates().reset_index(drop=True)
 location_data.rename(columns={"LocationID": "location_id", "Borough": "borough", "Zone": "zone"}, inplace=True)
+
+# Taking 60% of data
+sample_size = int(len(uber_data) * 0.6)
+uber_data = uber_data.sample(n=sample_size, random_state=42)
 
 # Cleaning data
 
@@ -70,15 +74,15 @@ payment_type_data.rename(columns={"payment_type": "payment_type_num"}, inplace=T
 payment_type_data = payment_type_data[["payment_type_id", "payment_type_num", "payment_type_name"]]
 
 # Creating trip table
-trip = uber_data.drop(columns=["store_and_fwd_flag", "improvement_surcharge", "airport_fee", "total_amount"])
+trip_data = uber_data.drop(columns=["store_and_fwd_flag", "improvement_surcharge", "airport_fee", "total_amount"])
 
-trip = trip.merge(ratecode_data[["ratecode_id", "ratecode_num"]], left_on="RatecodeID", right_on="ratecode_num", how="inner")
-trip = trip.merge(payment_type_data[["payment_type_id", "payment_type_num"]], left_on="payment_type", right_on="payment_type_num", how="inner")
-trip = trip.merge(vendor_data[["vendor_id", "vendor_num"]], left_on="VendorID", right_on="vendor_num", how="inner")
+trip_data = trip_data.merge(ratecode_data[["ratecode_id", "ratecode_num"]], left_on="RatecodeID", right_on="ratecode_num", how="inner")
+trip_data = trip_data.merge(payment_type_data[["payment_type_id", "payment_type_num"]], left_on="payment_type", right_on="payment_type_num", how="inner")
+trip_data = trip_data.merge(vendor_data[["vendor_id", "vendor_num"]], left_on="VendorID", right_on="vendor_num", how="inner")
 
-trip.drop(columns=["VendorID", "RatecodeID", "payment_type", "ratecode_num", "payment_type_num", "vendor_num"], inplace=True)
+trip_data.drop(columns=["VendorID", "RatecodeID", "payment_type", "ratecode_num", "payment_type_num", "vendor_num"], inplace=True)
 
-trip.rename(
+trip_data.rename(
     columns={
         "tpep_pickup_datetime": "pickup_datetime",
         "tpep_dropoff_datetime": "dropoff_datetime",
@@ -88,27 +92,27 @@ trip.rename(
     }, 
     inplace=True)
 
-trip["store_and_fwd_flag"] = uber_data["store_and_fwd_flag"].apply(lambda x: True if x == "Y" else False)
-trip["improvement_surcharge"] = uber_data["improvement_surcharge"].apply(lambda x: True if x == 0.3 else False)
-trip["airport_fee"] = uber_data["airport_fee"].apply(lambda x: True if x == 1.25 else False)
+trip_data["store_and_fwd_flag"] = uber_data["store_and_fwd_flag"].apply(lambda x: True if x == "Y" else False)
+trip_data["improvement_surcharge"] = uber_data["improvement_surcharge"].apply(lambda x: True if x == 0.3 else False)
+trip_data["airport_fee"] = uber_data["airport_fee"].apply(lambda x: True if x == 1.25 else False)
 
-trip["total_amount"] = trip[["fare_amount", "extra_amount", "mta_tax", "tip_amount", "tolls_amount", "congestion_surcharge"]].sum(axis=1)
-trip["total_amount"] = np.where(trip["airport_fee"], trip["total_amount"] + 1.25, trip["total_amount"])
-trip["total_amount"] = np.where(trip["improvement_surcharge"], trip["total_amount"] + 0.3, trip["total_amount"])
+trip_data["total_amount"] = trip_data[["fare_amount", "extra_amount", "mta_tax", "tip_amount", "tolls_amount", "congestion_surcharge"]].sum(axis=1)
+trip_data["total_amount"] = np.where(trip_data["airport_fee"], trip_data["total_amount"] + 1.25, trip_data["total_amount"])
+trip_data["total_amount"] = np.where(trip_data["improvement_surcharge"], trip_data["total_amount"] + 0.3, trip_data["total_amount"])
 
-trip["pickup_datetime"] = pd.to_datetime(trip["pickup_datetime"])
-trip["dropoff_datetime"] = pd.to_datetime(trip["dropoff_datetime"])
+trip_data["pickup_datetime"] = pd.to_datetime(trip_data["pickup_datetime"])
+trip_data["dropoff_datetime"] = pd.to_datetime(trip_data["dropoff_datetime"])
 
-trip["store_and_fwd_flag"] = trip["store_and_fwd_flag"].astype(bool)
-trip["improvement_surcharge"] = trip["improvement_surcharge"].astype(bool)
-trip["airport_fee"] = trip["airport_fee"].astype(bool)
+trip_data["store_and_fwd_flag"] = trip_data["store_and_fwd_flag"].astype(bool)
+trip_data["improvement_surcharge"] = trip_data["improvement_surcharge"].astype(bool)
+trip_data["airport_fee"] = trip_data["airport_fee"].astype(bool)
 
-trip = trip[trip["fare_amount"] > 0]
-trip = trip[trip["total_amount"] > 0]
+trip_data = trip_data[trip_data["fare_amount"] > 0]
+trip_data = trip_data[trip_data["total_amount"] > 0]
 
-trip["trip_id"] = trip.index + 1
+trip_data["trip_id"] = trip_data.index + 1
 
-trip = trip[[
+trip_data = trip_data[[
     "trip_id",
     "vendor_id", 
     "pickup_datetime", 
@@ -130,3 +134,14 @@ trip = trip[[
     "airport_fee",
     "total_amount"
 ]]
+
+# Return data in dictionary form
+'''
+return {
+        "location_data": location_data.to_dict(),
+        "vendor_data": vendor_data.to_dict(),
+        "ratecode_data": ratecode_data.to_dict(),
+        "payment_type_data": payment_type_data.to_dict(),
+        "trip_data": trip_data.to_dict()
+    }
+'''
