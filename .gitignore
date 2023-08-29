@@ -112,3 +112,5 @@ db.sqlite3
 # src/scripts/google-credentials.json
 app/webpack-stats.json
 credentials.json
+
+io.config.yaml
