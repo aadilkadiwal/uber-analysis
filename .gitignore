@@ -113,4 +113,5 @@ db.sqlite3
 app/webpack-stats.json
 credentials.json
 
-io.config.yaml
+# file name
+io_config.yaml
