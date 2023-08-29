@@ -27,8 +27,8 @@ def transform(location_data, uber_data, *args, **kwargs):
     location_data["LocationID"] = location_data[["LocationID"]].drop_duplicates().reset_index(drop=True)
     location_data.rename(columns={"LocationID": "location_id", "Borough": "borough", "Zone": "zone"}, inplace=True)
 
-    # Taking 60% of data
-    sample_size = int(len(uber_data) * 0.6)
+    # Taking 20% of data
+    sample_size = int(len(uber_data) * 0.2)
     uber_data = uber_data.sample(n=sample_size, random_state=42)
 
     # Cleaning data
