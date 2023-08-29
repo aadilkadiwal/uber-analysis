@@ -1,0 +1,5 @@
+pandas==2.0.3
+mage-ai==0.9.18
+google-cloud==0.34.0
+psycopg2-binary==2.9.7
+sshtunnel==0.4.0

@@ -1,69 +1,74 @@
 blocks:
 - all_upstream_blocks_executed: true
   color: null
-  configuration: {}
+  configuration:
+    file_path: null
   downstream_blocks:
-  - transformer
+  - uber_analysis_transformer
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: location_data
+  name: location_dataloader
   retry_config: null
   status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: location_data
+  uuid: location_dataloader
 - all_upstream_blocks_executed: true
   color: null
-  configuration: {}
+  configuration:
+    file_path: null
   downstream_blocks:
-  - transformer
+  - uber_analysis_transformer
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: uber_data
+  name: uber_data_dataloader
   retry_config: null
   status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: uber_data
+  uuid: uber_data_dataloader
 - all_upstream_blocks_executed: true
   color: null
-  configuration: {}
+  configuration:
+    file_path: null
   downstream_blocks:
-  - uber_data_exporter
+  - uber_analysis_dataexporter
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: transformer
+  name: uber_analysis_transformer
   retry_config: null
   status: executed
   type: transformer
   upstream_blocks:
-  - uber_data
-  - location_data
-  uuid: transformer
+  - location_dataloader
+  - uber_data_dataloader
+  uuid: uber_analysis_transformer
 - all_upstream_blocks_executed: true
   color: null
-  configuration: {}
+  configuration:
+    file_path: null
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: uber_data_exporter
+  name: uber_analysis_dataexporter
   retry_config: null
-  status: executed
+  status: not_executed
   type: data_exporter
   upstream_blocks:
-  - transformer
-  uuid: uber_data_exporter
+  - uber_analysis_transformer
+  uuid: uber_analysis_dataexporter
 callbacks: []
 concurrency_config: {}
 conditionals: []
+created_at: null
 data_integration: null
 description: null
 executor_config: {}
@@ -73,9 +78,10 @@ extensions: {}
 name: uber
 notification_config: {}
 retry_config: {}
+run_pipeline_in_one_process: false
 spark_config: {}
 tags: []
 type: python
-updated_at: '2023-08-24 13:24:45'
+updated_at: '2023-08-29 06:59:28'
 uuid: uber
 widgets: []
