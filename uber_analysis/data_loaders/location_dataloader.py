@@ -25,6 +25,8 @@ def load_data(*args, **kwargs):
     blob_response = blob.download_as_string()
     blob_response = blob_response.decode("utf-8")
 
+    
+
     return pd.read_csv(io.StringIO(blob_response), sep=',')
 
 @test
