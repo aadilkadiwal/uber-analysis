@@ -1,6 +1,7 @@
 import io
 import pandas as pd
-import requests
+from google.cloud import storage
+
 if 'data_loader' not in globals():
     from mage_ai.data_preparation.decorators import data_loader
 if 'test' not in globals():
@@ -8,15 +9,22 @@ if 'test' not in globals():
 
 
 @data_loader
-def load_data_from_api(*args, **kwargs):
+def load_data(*args, **kwargs):
     """
-    Template for loading data from API
+    Template code for loading data from any source.
+
+    Returns:
+        Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
-    url = 'https://storage.googleapis.com/uber_data_analytic_project/uber_data.csv'
-    response = requests.get(url)
+    # Specify your data loading logic here
 
-    return pd.read_csv(io.StringIO(response.text), sep=',')
+    storage_client = storage.Client.from_service_account_json('pixeldust-cloud.json')
+    bucket = storage_client.get_bucket('uber_data_analytic_project')
+    blob = bucket.blob('uber_data.csv')
+    blob_response = blob.download_as_string()
+    blob_response = blob_response.decode("utf-8")
 
+    return pd.read_csv(io.StringIO(blob_response), sep=',')
 
 @test
 def test_output(output, *args) -> None:
