@@ -18,14 +18,12 @@ def load_data(*args, **kwargs):
     """
     # Specify your data loading logic here
 
-    storage_client = storage.Client.from_service_account_json('pixeldust-cloud.json')
+    storage_client = storage.Client.from_service_account_json('cloud-credentials.json')
     
     bucket = storage_client.get_bucket('uber_data_analytic_project')
     blob = bucket.blob('location_zone.csv')
     blob_response = blob.download_as_string()
     blob_response = blob_response.decode("utf-8")
-
-    
 
     return pd.read_csv(io.StringIO(blob_response), sep=',')
 
