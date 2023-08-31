@@ -190,7 +190,7 @@ To deeply understand Uber trip data from a particular website. We'll use Google 
 
 <summary><h3><a href="http://supervisord.org/index.html">Supervisor</a></h3></summary>
 
-**Install Supervisor:**
+**1: Install Supervisor:**
 
 - Open a terminal and run the following command to install Supervisor:
 
@@ -198,23 +198,24 @@ To deeply understand Uber trip data from a particular website. We'll use Google 
     sudo apt install supervisor
     ```
 
-**Create Configuration File:**
+**2: Create Configuration File:**
 
 - Create a new configuration file, such as `/etc/supervisor/conf.d/uber-analysis.conf`, using your preferred text editor. Inside this file, define the process configuration:
 
     ```
     [program:uber-analysis]
     directory=/home/aadilkadiwal4277/uber-analysis/
-    command=/home/aadilkadiwal4277/uber-analysis/venv/bin/mage start uber_analysis
+    command=/path/to/mage start uber_analysis
     autostart=true
     autorestart=true
     stderr_logfile=/var/log/uber-analysis.err.log
     stdout_logfile=/var/log/uber-analysis.out.log
+    logfile_maxbytes=50MB
     ```
 
-Replace `/path/to/mage` with the actual path to the mage command and `/path/to/uber-analysis` with the actual path to the uber_analysis directory.
+Replace `/path/to/uber-analysis` with the actual path to the uber_analysis directory and `/path/to/mage` with the actual path to the mage command.
 
-**Reload Supervisor:**
+**3: Reload Supervisor:**
 
 - After creating the configuration file, reload Supervisor to read the new configuration:
 
@@ -223,7 +224,7 @@ Replace `/path/to/mage` with the actual path to the mage command and `/path/to/u
     sudo supervisorctl update
     ```
 
-**Start and Manage the Process:**
+**4: Start and Manage the Process:**
 
 - You can now start, stop, or restart your process using Supervisor:
 
@@ -251,7 +252,7 @@ Replace `/path/to/mage` with the actual path to the mage command and `/path/to/u
         sudo supervisorctl status
         ```
 
-**Monitor Logs:**
+**5: Monitor Logs:**
 
 - Supervisor logs for this process will be stored in the log files specified in the configuration: `/var/log/uber-analysis.err.log` for standard error and `/var/log/uber-analysis.out.log` for standard output.
 
