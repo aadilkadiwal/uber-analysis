@@ -11,6 +11,7 @@ To deeply understand Uber trip data from a particular website. We'll use Google 
 ---
 
 <details>
+
 <summary><h2>Installation</h2></summary>
 
 - The Project based on Python version: **3.10.12**
@@ -34,8 +35,8 @@ To deeply understand Uber trip data from a particular website. We'll use Google 
 
 </details>
 
-
 <details>
+
 <summary><h2>Getting Started</h2></summary>
 
 <strong>Step 1: Getting Data: </strong>We'll collect Uber trip information from a special website.
@@ -111,8 +112,6 @@ To deeply understand Uber trip data from a particular website. We'll use Google 
 
 </details>
 
----
-
 ### Benefits
 
 **Data Analysis Skills:** Engaging in this project will enhance your data analysis skills as you work with real-world data and implement various data processing techniques.
@@ -129,16 +128,133 @@ To deeply understand Uber trip data from a particular website. We'll use Google 
 
 ### Reference
 
-**Related Docs:**
+<details>
 
-[Mage](https://docs.mage.ai/introduction/overview)
+<summary><h4>Related Documentation</h3></summary>
 
-[Google Cloud Platform](https://cloud.google.com/docs)
+- [Mage](https://docs.mage.ai/introduction/overview)
 
-**Related Video:**
+- [Google Cloud Platform](https://cloud.google.com/docs)
 
-[Uber Data Analytics | End-To-End Data Engineering Project](https://www.youtube.com/watch?v=WpQECq5Hx9g)
+</details>
 
-[Google Cloud Platform Tutorial](https://www.youtube.com/watch?v=zBBevSjX9E8&list=PLLhBy6YSIT0A63_RuqW6naWa66xzYVtP5)
+<details>
 
-[Looker Studio Tutorial](https://www.youtube.com/watch?v=8cMd1KJAyg8&list=PLNfnAKZ4ZsarFIZHOkbUBPCpEXeHRgt-Y)
+<summary><h4>Related Video</h4></summary>
+
+- [Uber Data Analytics | End-To-End Data Engineering Project](https://www.youtube.com/watch?v=WpQECq5Hx9g)
+
+- [Google Cloud Platform Tutorial](https://www.youtube.com/watch?v=zBBevSjX9E8&list=PLLhBy6YSIT0A63_RuqW6naWa66xzYVtP5)
+
+- [Looker Studio Tutorial](https://www.youtube.com/watch?v=8cMd1KJAyg8&list=PLNfnAKZ4ZsarFIZHOkbUBPCpEXeHRgt-Y)
+
+</details>
+
+---
+
+<details>
+
+<summary><h2>Advanced Configuration</h2></summary>
+
+<details>
+
+<summary><h3><a href="https://docs.ansible.com/">Ansible</a></h3></summary>
+
+**Installation Process:**
+
+- Begin by installing Ansible using the following pip command:
+
+    ```
+    $ pip install ansible
+    ```
+
+**File Encryption:**
+
+- To encrypt a file using Ansible Vault, execute the following command:
+
+    ```
+    $ ansible-vault encrypt <file_name>
+    ```
+
+**File Decryption:**
+
+- To decrypt an encrypted file, use the following command:
+
+    ```
+    $ ansible-vault decrypt <file_name>
+    ```
+
+</details>
+
+<details>
+
+<summary><h3><a href="http://supervisord.org/index.html">Supervisor</a></h3></summary>
+
+**Install Supervisor:**
+
+- Open a terminal and run the following command to install Supervisor:
+
+    ```
+    sudo apt install supervisor
+    ```
+
+**Create Configuration File:**
+
+- Create a new configuration file, such as `/etc/supervisor/conf.d/uber-analysis.conf`, using your preferred text editor. Inside this file, define the process configuration:
+
+    ```
+    [program:uber-analysis]
+    directory=/home/aadilkadiwal4277/uber-analysis/
+    command=/home/aadilkadiwal4277/uber-analysis/venv/bin/mage start uber_analysis
+    autostart=true
+    autorestart=true
+    stderr_logfile=/var/log/uber-analysis.err.log
+    stdout_logfile=/var/log/uber-analysis.out.log
+    ```
+
+Replace `/path/to/mage` with the actual path to the mage command and `/path/to/uber-analysis` with the actual path to the uber_analysis directory.
+
+**Reload Supervisor:**
+
+- After creating the configuration file, reload Supervisor to read the new configuration:
+
+    ```
+    sudo supervisorctl reread
+    sudo supervisorctl update
+    ```
+
+**Start and Manage the Process:**
+
+- You can now start, stop, or restart your process using Supervisor:
+
+    - Start the process:
+
+        ```
+        sudo supervisorctl start uber-analysis
+        ```
+
+    - Stop the process:
+
+        ```
+        sudo supervisorctl stop uber-analysis
+        ```
+
+    - Restart the process:
+
+        ```    
+        sudo supervisorctl restart uber-analysis
+        ```
+
+    - View process status:
+
+        ```
+        sudo supervisorctl status
+        ```
+
+**Monitor Logs:**
+
+- Supervisor logs for this process will be stored in the log files specified in the configuration: `/var/log/uber-analysis.err.log` for standard error and `/var/log/uber-analysis.out.log` for standard output.
+
+</details>
+
+</details>
