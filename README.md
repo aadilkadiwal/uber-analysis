@@ -220,8 +220,8 @@ Replace `/path/to/uber-analysis` with the actual path to the uber_analysis direc
 - After creating the configuration file, reload Supervisor to read the new configuration:
 
     ```
-    sudo supervisorctl reread
-    sudo supervisorctl update
+    $ sudo supervisorctl reread
+    $ sudo supervisorctl update
     ```
 
 **4: Start and Manage the Process:**
@@ -231,30 +231,77 @@ Replace `/path/to/uber-analysis` with the actual path to the uber_analysis direc
     - Start the process:
 
         ```
-        sudo supervisorctl start uber-analysis
+        $ sudo supervisorctl start uber-analysis
         ```
 
     - Stop the process:
 
         ```
-        sudo supervisorctl stop uber-analysis
+        $ sudo supervisorctl stop uber-analysis
         ```
 
     - Restart the process:
 
         ```    
-        sudo supervisorctl restart uber-analysis
+        $ sudo supervisorctl restart uber-analysis
         ```
 
     - View process status:
 
         ```
-        sudo supervisorctl status
+        $ sudo supervisorctl status
         ```
 
 **5: Monitor Logs:**
 
 - Supervisor logs for this process will be stored in the log files specified in the configuration: `/var/log/uber-analysis.err.log` for standard error and `/var/log/uber-analysis.out.log` for standard output.
+
+</details>
+
+<details>
+
+<summary><h3><a href="https://www.docker.com/">Docker</a></h3></summary>
+
+**1: Install Docker:**
+
+- Open a terminal and run the following command to install Docker on Ubuntu 22.04:
+
+    ```
+    $ sudo apt install apt-transport-https ca-certificates curl software-properties-common
+    $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    $ sudo apt-get update
+    $ sudo apt-get install docker-ce -y
+    $ sudo systemctl start docker
+    $ sudo systemctl enable docker
+    $ sudo groupadd docker
+    $ sudo usermod -aG docker ubuntu
+    ```
+
+**2: Build the Docker Image:**
+
+-  Use the Dockerfile to build the Docker image. Run this command in the same directory as your Dockerfile:
+
+    ```
+    $ docker build -t uber-analysis:0.1 .
+    ```
+
+**3: Run a Docker Container**
+
+- To run a container from the image you built, use the docker run command:
+
+    ```
+    $ docker run -p 6789:6789 uber-analysis:0.1
+    ```
+
+**4: Push Image to Docker Hub**
+
+- To push your Docker image to Docker Hub, you need to tag it with your Docker Hub username and repository name, and then use the docker push command:
+
+    ```
+    $ docker tag uber-analysis:0.1 aadilkadiwal/uber-analysis:prod
+    $ docker push aadilkadiwal/uber-analysis:prod
+    ```
 
 </details>
 
